@@ -1,0 +1,301 @@
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PivotArc — Make the Pivotal Transition</title>
+  <meta name="description" content="PivotArc helps SaaS companies at pivotal moments overcome reliability, scalability, and extensibility challenges — to accelerate growth, reduce costs, and boost developer velocity." />
+  <meta property="og:title" content="PivotArc — Make the Pivotal Transition" />
+  <meta property="og:description" content="Reliability, scalability, and extensibility for SaaS at pivotal growth moments." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pivotarc.example" />
+  <meta name="theme-color" content="#0B1D2A" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%230B1D2A'/><path d='M20 55a30 30 0 0150-20' fill='none' stroke='%2300BFA6' stroke-width='8' stroke-linecap='round'/><circle cx='70' cy='35' r='6' fill='%2300BFA6'/></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#0B1D2A' },
+            accent: { DEFAULT: '#00BFA6' },
+          },
+          boxShadow: {
+            'soft': '0 10px 30px -10px rgba(0,0,0,0.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Inter font via system stack fallback for simplicity */
+    html { font-feature-settings: 'ss01' on, 'ss02' on; }
+  </style>
+  <script>
+    // Dark mode: respect saved preference or OS setting
+    (function() {
+      const stored = localStorage.getItem('pa-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if ((stored === 'dark') || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-accent/20 selection:text-slate-900">
+  <!-- Nav -->
+  <header class="sticky top-0 z-50 border-b border-slate-200/60 dark:border-slate-800/60 backdrop-blur bg-white/70 dark:bg-slate-950/60">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="#top" class="group flex items-center gap-3">
+        <div class="h-9 w-9 rounded-xl bg-accent/20 grid place-items-center">
+          <span class="font-extrabold text-accent tracking-tight">PA</span>
+        </div>
+        <span class="font-semibold tracking-tight">PivotArc</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-slate-600 dark:text-slate-300">
+        <a href="#services" class="hover:text-slate-900 dark:hover:text-white">Services</a>
+        <a href="#why" class="hover:text-slate-900 dark:hover:text-white">Why</a>
+        <a href="#story" class="hover:text-slate-900 dark:hover:text-white">Story</a>
+        <a href="#resources" class="hover:text-slate-900 dark:hover:text-white">Resources</a>
+        <a href="#contact" class="hover:text-slate-900 dark:hover:text-white">Contact</a>
+        <a href="#contact" class="ml-2 inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-slate-900 hover:opacity-90">Book call</a>
+        <button id="themeToggle" aria-label="Toggle dark mode" class="ml-2 rounded-lg border border-slate-200 dark:border-slate-800 px-2 py-2 hover:bg-slate-100 dark:hover:bg-slate-900">
+          <svg class="h-5 w-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </nav>
+      <button id="menuBtn" class="md:hidden p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+      <nav class="mx-auto max-w-6xl px-4 py-3 grid gap-3 text-slate-700 dark:text-slate-300">
+        <a class="py-2" href="#services">Services</a>
+        <a class="py-2" href="#why">Why</a>
+        <a class="py-2" href="#story">Story</a>
+        <a class="py-2" href="#resources">Resources</a>
+        <a class="py-2" href="#contact">Contact</a>
+        <a class="inline-flex items-center justify-center rounded-xl bg-accent px-4 py-2 font-medium text-slate-900" href="#contact">Book call</a>
+        <button id="themeToggleMobile" class="justify-self-start mt-2 rounded-lg border border-slate-200 dark:border-slate-800 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-900">Toggle theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Intro -->
+    <section class="border-b border-slate-200/60 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/40">
+      <div class="mx-auto max-w-6xl px-4 py-6 text-slate-700 dark:text-slate-300">
+        <p class="text-sm md:text-base">
+          At some point, every SaaS outgrows its first architecture. Reliability starts to wobble, scalability lags, or lack of extensibility slows teams down.
+          <span class="font-medium text-slate-900 dark:text-white">PivotArc helps you make the pivotal transition that sets you up for years of growth</span> — scaling faster, adding features cheaper, and more reliably.
+        </p>
+      </div>
+    </section>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl"></div>
+      <div class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-teal-500/10 blur-3xl"></div>
+      <div class="mx-auto max-w-6xl px-4 py-16 md:py-24">
+        <h1 class="text-3xl md:text-5xl font-semibold tracking-tight">Make the Pivotal Transition.</h1>
+        <p class="mt-4 max-w-3xl text-lg text-slate-600 dark:text-slate-300">
+          Every SaaS hits key growth moments where architecture limits hold them back. PivotArc helps you overcome
+          <span class="font-medium text-slate-900 dark:text-white">reliability, scalability, and extensibility</span> challenges — so you can accelerate growth, reduce costs, and increase development velocity.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="#contact" class="inline-flex items-center justify-center rounded-xl bg-accent px-5 py-3 font-medium text-slate-900 hover:opacity-90">Book a discovery call</a>
+          <a href="#services" class="inline-flex items-center justify-center rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-medium hover:bg-slate-50 dark:hover:bg-slate-900">Explore services</a>
+        </div>
+        <ul class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-slate-500 dark:text-slate-400">
+          <li>• 12+ years across Microsoft Azure & Google Cloud</li>
+          <li>• One of Azure’s Postmortem Champions</li>
+          <li>• Zero‑downtime migrations for millions of users</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-16 border-y border-slate-200/60 dark:border-slate-800/60">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Services for your pivotal moment</h2>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Clear scopes. Outcome-driven. Designed to raise reliability, scalability, and extensibility together.</p>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
+            <h3 class="font-semibold">Reliability Consulting</h3>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>• Blameless postmortems, incident response, runbooks</li>
+              <li>• SLOs, error budgets, on-call health</li>
+              <li>• 90‑day remediation plan with quick wins</li>
+            </ul>
+            <p class="mt-3 text-sm text-slate-500">Outcome: fewer repeat incidents, faster recovery, stronger customer trust.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
+            <h3 class="font-semibold">Scalability Readiness</h3>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>• Bottleneck analysis, capacity planning</li>
+              <li>• Tenancy patterns, sharding, async workflows</li>
+              <li>• Multi‑region resilience and zero‑downtime strategies</li>
+            </ul>
+            <p class="mt-3 text-sm text-slate-500">Outcome: handle 10× load without costly rewrites.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
+            <h3 class="font-semibold">Extensibility by Design</h3>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>• API‑first design, versioning, compatibility</li>
+              <li>• Plugin points and domain boundaries</li>
+              <li>• Patterns to ship features faster with less risk</li>
+            </ul>
+            <p class="mt-3 text-sm text-slate-500">Outcome: faster developer velocity, fewer regressions.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
+            <h3 class="font-semibold">Technical Due Diligence</h3>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>• Architecture, reliability, scalability risk assessment</li>
+              <li>• Code & process health indicators</li>
+              <li>• Actionable roadmap for post-investment improvements</li>
+            </ul>
+            <p class="mt-3 text-sm text-slate-500">Outcome: founders & VCs make confident decisions.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft md:col-span-2">
+            <h3 class="font-semibold">CTO / Lead Engineer Mentorship</h3>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>• Weekly coaching on scale, SRE, and architecture</li>
+              <li>• Shadow reviews of designs and production changes</li>
+              <li>• Vendor negotiation and roadmap sounding board</li>
+            </ul>
+            <p class="mt-3 text-sm text-slate-500">Outcome: in‑house capability grows; reliance on external help declines.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why -->
+    <section id="why" class="py-16">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Why PivotArc</h2>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">Pivotal-moment specialist</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">I focus on the transition from v1 to v2 — the moment where reliability, scalability, and extensibility must level up together.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">Hyperscale credibility</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">12+ years across Microsoft Azure & Google Cloud; designed and operated planet‑scale systems.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">Postmortem champion</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">One of Azure’s Postmortem Champions — I teach blameless learning that sticks and improves outcomes.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">Mentor, not dependency</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">I coach your CTO/lead to own reliability & scale, so improvements endure after I’m gone.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story / Credibility -->
+    <section id="story" class="py-16 border-y border-slate-200/60 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/40">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">My Story</h2>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">1) Early SaaS Builder</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Hands-on with small SaaS systems: tenant isolation, customization, evolving single‑tenant code to multi‑tenant. Built CRMs & financial platforms serving tens of thousands of users; mission‑critical software for public sector where reliability wasn’t optional.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">2) Microsoft Azure (9y)</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Mastered global SaaS scale. Senior Tech Lead & one of 10 Azure Postmortem Champions. Drove system consolidations, designed for extensibility, and led zero‑downtime migrations for millions of users.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">3) Google Cloud (3y)</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Uber Tech Lead. Platformized learnings into a SaaS Runtime platform for planetary‑scale multi‑tenant apps. Co‑founded API Council; authored postmortem guidelines to raise review quality.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section id="resources" class="py-16">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Resources</h2>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Practical tools you can use today. No fluff.</p>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
+            <h3 class="font-semibold">SaaS V2 Architecture Checklist (PDF)</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">15‑point checklist to spot scaling bottlenecks, fragility, and cost sinks before they bite.</p>
+            <a href="#" class="mt-4 inline-flex rounded-xl bg-accent px-4 py-2 text-sm font-medium text-slate-900 hover:opacity-90">Download</a>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
+            <h3 class="font-semibold">Blameless Postmortem Guide (PDF)</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Step‑by‑step template and facilitation tips from enterprise‑scale incident programs.</p>
+            <a href="#" class="mt-4 inline-flex rounded-xl bg-accent px-4 py-2 text-sm font-medium text-slate-900 hover:opacity-90">Download</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 border-t border-slate-200/60 dark:border-slate-800/60">
+      <div class="mx-auto max-w-6xl px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Ready to make the pivotal transition?</h2>
+            <p class="mt-2 text-slate-600 dark:text-slate-300">Book a free consultation. I’ll review your situation and outline concrete next steps — whether it’s a reliability upgrade sprint or a full v2 blueprint.</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="https://calendly.com/" class="rounded-xl bg-accent px-5 py-3 font-medium text-slate-900 hover:opacity-90">Book call</a>
+              <a href="mailto:hello@pivotarc.one" class="rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-medium hover:bg-slate-50 dark:hover:bg-slate-900">Email</a>
+              <a href="https://www.linkedin.com/" class="rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-medium hover:bg-slate-50 dark:hover:bg-slate-900">LinkedIn</a>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+            <h3 class="font-semibold">Quick details</h3>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+              <li>• Based in Poland • Serving EU & UK</li>
+              <li>• Availability: part‑time advisory, short projects</li>
+              <li>• Focus: SaaS reliability, scalability, extensibility</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200/60 dark:border-slate-800/60 py-8 text-sm">
+    <div class="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-600 dark:text-slate-400">
+      <div class="flex items-center gap-2">
+        <div class="h-7 w-7 rounded-lg bg-accent/20 grid place-items-center">
+          <span class="text-accent text-xs font-bold">PA</span>
+        </div>
+        <span>PivotArc</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a class="hover:text-slate-900 dark:hover:text-white" href="https://www.linkedin.com/">LinkedIn</a>
+        <a class="hover:text-slate-900 dark:hover:text-white" href="mailto:hello@pivotarc.one">hello@pivotarc.one</a>
+      </div>
+      <div class="text-xs">© <span id="year"></span> PivotArc. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const themeBtn = document.getElementById('themeToggle');
+    const themeBtnM = document.getElementById('themeToggleMobile');
+
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('pa-theme', isDark ? 'dark' : 'light');
+    }
+    themeBtn?.addEventListener('click', toggleTheme);
+    themeBtnM?.addEventListener('click', toggleTheme);
+  </script>
+</body>
+</html>
