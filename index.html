@@ -1,17 +1,10 @@
-
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PivotArc — Make the Pivotal Transition</title>
-  <meta name="description" content="PivotArc helps SaaS companies at pivotal moments overcome reliability, scalability, and extensibility challenges — to accelerate growth, reduce costs, and boost developer velocity." />
-  <meta property="og:title" content="PivotArc — Make the Pivotal Transition" />
-  <meta property="og:description" content="Reliability, scalability, and extensibility for SaaS at pivotal growth moments." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pivotarc.example" />
-  <meta name="theme-color" content="#0B1D2A" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%230B1D2A'/><path d='M20 55a30 30 0 0150-20' fill='none' stroke='%2300BFA6' stroke-width='8' stroke-linecap='round'/><circle cx='70' cy='35' r='6' fill='%2300BFA6'/></svg>">
+  <meta name="description" content="Architecture transitions for growing SaaS. When reliability wobbles, costs spiral, and features take forever — I help you make the pivotal transition without breaking production." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -19,283 +12,345 @@
       theme: {
         extend: {
           colors: {
-            brand: { DEFAULT: '#0B1D2A' },
-            accent: { DEFAULT: '#00BFA6' },
+            ink: '#0E0F12',
+            paper: '#F5F6F8',
+            rule: '#E5E7EB',
+            ruleDark: '#1F2937',
+            accent: 'var(--color-accent)'
           },
-          boxShadow: {
-            'soft': '0 10px 30px -10px rgba(0,0,0,0.25)'
+          fontFamily: {
+            sans: ['Inter','system-ui','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif'],
+            mono: ['ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace']
           }
         }
       }
     }
   </script>
-  <style>
-    /* Inter font via system stack fallback for simplicity */
-    html { font-feature-settings: 'ss01' on, 'ss02' on; }
-  </style>
   <script>
-    // Dark mode: respect saved preference or OS setting
-    (function() {
-      const stored = localStorage.getItem('pa-theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if ((stored === 'dark') || (!stored && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      }
+    (function () {
+      // Default to dark mode
+      document.documentElement.classList.add('dark');
+      const saved = localStorage.getItem('pa-theme');
+      if (saved === 'light') document.documentElement.classList.remove('dark');
     })();
+    function toggleTheme(){
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('pa-theme', isDark ? 'dark' : 'light');
+    }
   </script>
+  <style>
+    :root {
+      --color-accent: #6D28D9; /* violet-700 */
+    }
+    .dark {
+      --color-accent: #7C3AED; /* violet-600 */
+    }
+    html { scroll-behavior: smooth; }
+    /* Basic hamburger menu animation */
+    .hamburger { cursor: pointer; }
+    .hamburger-top, .hamburger-middle, .hamburger-bottom { display: block; width: 24px; height: 2px; background-color: currentColor; margin: 5px 0; transition: all 0.3s; }
+    .hamburger.open .hamburger-top { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open .hamburger-middle { opacity: 0; }
+    .hamburger.open .hamburger-bottom { transform: rotate(-45deg) translate(5px, -5px); }
+  </style>
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230E0F12"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Inter, sans-serif" font-size="50" font-weight="600" fill="%23F5F6F8">PA</text></svg>'>
 </head>
-<body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-accent/20 selection:text-slate-900">
-  <!-- Nav -->
-  <header class="sticky top-0 z-50 border-b border-slate-200/60 dark:border-slate-800/60 backdrop-blur bg-white/70 dark:bg-slate-950/60">
-    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-      <a href="#top" class="group flex items-center gap-3">
-        <div class="h-9 w-9 rounded-xl bg-accent/20 grid place-items-center">
-          <span class="font-extrabold text-accent tracking-tight">PA</span>
-        </div>
-        <span class="font-semibold tracking-tight">PivotArc</span>
-      </a>
-      <nav class="hidden md:flex items-center gap-8 text-slate-600 dark:text-slate-300">
-        <a href="#services" class="hover:text-slate-900 dark:hover:text-white">Services</a>
-        <a href="#why" class="hover:text-slate-900 dark:hover:text-white">Why</a>
-        <a href="#story" class="hover:text-slate-900 dark:hover:text-white">Story</a>
-        <a href="#resources" class="hover:text-slate-900 dark:hover:text-white">Resources</a>
-        <a href="#contact" class="hover:text-slate-900 dark:hover:text-white">Contact</a>
-        <a href="#contact" class="ml-2 inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-slate-900 hover:opacity-90">Book call</a>
-        <button id="themeToggle" aria-label="Toggle dark mode" class="ml-2 rounded-lg border border-slate-200 dark:border-slate-800 px-2 py-2 hover:bg-slate-100 dark:hover:bg-slate-900">
-          <svg class="h-5 w-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+<body class="bg-paper dark:bg-ink text-gray-900 dark:text-paper font-sans selection:bg-accent/20">
+  <header class="border-b border-rule dark:border-ruleDark sticky top-0 bg-paper/80 dark:bg-ink/80 backdrop-blur-sm z-10">
+    <div class="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+      <a href="#top" class="font-semibold tracking-tight text-gray-900 dark:text-paper">PivotArc</a>
+      <div class="flex items-center">
+        <nav class="hidden md:flex items-center gap-6 text-gray-600 dark:text-paper/70">
+          <a href="#services" class="hover:text-gray-900 dark:hover:text-paper">Services</a>
+          <a href="#why" class="hover:text-gray-900 dark:hover:text-paper">Why</a>
+          <a href="#journey" class="hover:text-gray-900 dark:hover:text-paper">Journey</a>
+          <a href="#contact" class="hover:text-gray-900 dark:hover:text-paper">Contact</a>
+          <a href="mailto:tm@pivotarc.io?subject=Architecture%20Consultation%20Request" class="ml-2 rounded-lg border border-accent text-accent dark:border-accent px-3 py-1.5 hover:bg-accent hover:text-paper transition-all duration-150 ease-in-out active:scale-95">Schedule Call</a>
+        </nav>
+        <button onclick="toggleTheme()" aria-label="Toggle dark mode" class="ml-4 rounded-lg border border-rule dark:border-ruleDark px-2.5 py-2 hover:bg-gray-100 dark:hover:bg-white/5">
+          <svg class="h-4 w-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+          <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
         </button>
-      </nav>
-      <button id="menuBtn" class="md:hidden p-2 rounded-lg border border-slate-200 dark:border-slate-800">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-btn" class="hamburger ml-4 text-gray-900 dark:text-paper" aria-label="Open menu">
+            <span class="hamburger-top"></span>
+            <span class="hamburger-middle"></span>
+            <span class="hamburger-bottom"></span>
+          </button>
+        </div>
+      </div>
     </div>
-    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-      <nav class="mx-auto max-w-6xl px-4 py-3 grid gap-3 text-slate-700 dark:text-slate-300">
-        <a class="py-2" href="#services">Services</a>
-        <a class="py-2" href="#why">Why</a>
-        <a class="py-2" href="#story">Story</a>
-        <a class="py-2" href="#resources">Resources</a>
-        <a class="py-2" href="#contact">Contact</a>
-        <a class="inline-flex items-center justify-center rounded-xl bg-accent px-4 py-2 font-medium text-slate-900" href="#contact">Book call</a>
-        <button id="themeToggleMobile" class="justify-self-start mt-2 rounded-lg border border-slate-200 dark:border-slate-800 px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-900">Toggle theme</button>
-      </nav>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-rule dark:border-ruleDark bg-paper dark:bg-ink">
+        <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-paper/70 hover:bg-gray-50 dark:hover:bg-white/5">Services</a>
+        <a href="#why" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-paper/70 hover:bg-gray-50 dark:hover:bg-white/5">Why</a>
+        <a href="#journey" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-paper/70 hover:bg-gray-50 dark:hover:bg-white/5">Journey</a>
+        <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-paper/70 hover:bg-gray-50 dark:hover:bg-white/5">Contact</a>
+        <a href="mailto:tm@pivotarc.io?subject=Architecture%20Consultation%20Request" class="block w-full text-left mt-2 px-3 py-2 rounded-md text-base font-medium border border-accent text-accent hover:bg-accent hover:text-paper transition-all duration-150 ease-in-out active:scale-95">Schedule Call</a>
+      </div>
     </div>
   </header>
 
   <main id="top">
-    <!-- Intro -->
-    <section class="border-b border-slate-200/60 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/40">
-      <div class="mx-auto max-w-6xl px-4 py-6 text-slate-700 dark:text-slate-300">
-        <p class="text-sm md:text-base">
-          At some point, every SaaS outgrows its first architecture. Reliability starts to wobble, scalability lags, or lack of extensibility slows teams down.
-          <span class="font-medium text-slate-900 dark:text-white">PivotArc helps you make the pivotal transition that sets you up for years of growth</span> — scaling faster, adding features cheaper, and more reliably.
+    <section class="border-b border-rule dark:border-ruleDark">
+      <div class="mx-auto max-w-5xl px-4 py-12">
+        <h1 class="text-4xl mt-2 text-gray-900 dark:text-paper">Your SaaS outgrew its first architecture. Now what?</h1>
+        <p class="mt-3 max-w-3xl text-gray-600 dark:text-paper/70">
+          When reliability wobbles, costs spiral, and features take forever to ship — you need an architectural pivot. 
+          <span class="text-gray-900 dark:text-paper">I've done these transitions at Microsoft and Google. Now I help SaaS companies make their pivotal transition</span> without breaking production.
         </p>
+        <div class="mt-6 flex gap-3">
+          <a href="mailto:tm@pivotarc.io?subject=Architecture%20Consultation%20Request" class="rounded-lg border border-accent text-accent px-4 py-2 hover:bg-accent hover:text-paper transition-all duration-150 ease-in-out active:scale-95">Let's discuss your challenges</a>
+          <a href="#services" class="rounded-lg border border-accent text-accent px-4 py-2 hover:bg-accent hover:text-paper transition-all duration-150 ease-in-out active:scale-95">Explore services</a>
+        </div>
+        <div class="mt-8 flex flex-wrap items-center gap-6 text-gray-600 dark:text-paper/60">
+          <span class="text-xs font-mono tracking-widest uppercase">Credentials</span>
+          <div class="flex items-center gap-2">
+            <svg viewBox="0 0 23 23" class="h-5 w-5" aria-label="Microsoft">
+              <path fill="#f35325" d="M1 1h10v10H1z"/>
+              <path fill="#81bc06" d="M12 1h10v10H12z"/>
+              <path fill="#05a6f0" d="M1 12h10v10H1z"/>
+              <path fill="#ffba08" d="M12 12h10v10H12z"/>
+            </svg>
+            <span class="text-sm">Microsoft (9 years)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" aria-label="Google">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            <span class="text-sm">Google (3 years)</span>
+          </div>
+          <span class="text-sm">• 15+ years global teams</span>
+        </div>
       </div>
     </section>
 
-    <!-- Hero -->
-    <section class="relative overflow-hidden">
-      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl"></div>
-      <div class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-teal-500/10 blur-3xl"></div>
-      <div class="mx-auto max-w-6xl px-4 py-16 md:py-24">
-        <h1 class="text-3xl md:text-5xl font-semibold tracking-tight">Make the Pivotal Transition.</h1>
-        <p class="mt-4 max-w-3xl text-lg text-slate-600 dark:text-slate-300">
-          Every SaaS hits key growth moments where architecture limits hold them back. PivotArc helps you overcome
-          <span class="font-medium text-slate-900 dark:text-white">reliability, scalability, and extensibility</span> challenges — so you can accelerate growth, reduce costs, and increase development velocity.
-        </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-3">
-          <a href="#contact" class="inline-flex items-center justify-center rounded-xl bg-accent px-5 py-3 font-medium text-slate-900 hover:opacity-90">Book a discovery call</a>
-          <a href="#services" class="inline-flex items-center justify-center rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-medium hover:bg-slate-50 dark:hover:bg-slate-900">Explore services</a>
+    <section id="services" class="border-b border-rule dark:border-ruleDark">
+      <div class="mx-auto max-w-5xl px-4 py-10">
+        <div class="text-xs font-mono tracking-widest text-gray-500 dark:text-paper/50 uppercase">Services</div>
+        <h2 class="text-2xl mt-2 text-gray-900 dark:text-paper">Engagements for your pivotal transition</h2>
+      </div>
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Incident Analysis</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">$5-10k • 1-2 weeks</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            Turn your recent outage into a learning opportunity. Blameless postmortem facilitation, real root cause analysis, concrete improvements. 
+            <br><br>
+            <span class="text-gray-900 dark:text-paper">Outcome:</span> Your team learns from failure and prevents repeat issues.
+          </div>
         </div>
-        <ul class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-slate-500 dark:text-slate-400">
-          <li>• 12+ years across Microsoft Azure & Google Cloud</li>
-          <li>• One of Azure’s Postmortem Champions</li>
-          <li>• Zero‑downtime migrations for millions of users</li>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Reliability Audit</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">$15-25k • 2-3 weeks</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            Independent review of how you build and operate. Incident response, monitoring gaps, SLOs & error budgets, culture assessment.
+            <br><br>
+            <span class="text-gray-900 dark:text-paper">Outcome:</span> Clear reliability posture with prioritized quick wins.
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Architecture Assessment</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">$25-40k • 3-4 weeks</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            Systematic audit of your SaaS architecture. Scalability ceilings, cost drivers, extensibility blockers, reliability risks.
+            <br><br>
+            <span class="text-gray-900 dark:text-paper">Outcome:</span> Risk/opportunity matrix across all three dimensions.
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Transition Roadmap</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">$40-60k • 4-6 weeks</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            Design your path from current architecture to vNext. Target architecture, phased migration plan, zero-downtime strategies, team preparation.
+            <br><br>
+            <span class="text-gray-900 dark:text-paper">Outcome:</span> Pragmatic roadmap balancing business constraints with technical needs.
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Focused Engagement</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">Custom pricing</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            Targeted engagement for your specific challenge. Deep dive into your particular bottleneck, custom solution design, implementation support.
+            <br><br>
+            <span class="text-gray-900 dark:text-paper">Outcome:</span> Specific problem solved without unnecessary scope expansion.
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto max-w-5xl px-4 py-6">
+        <a href="mailto:tm@pivotarc.io?subject=Architecture%20Consultation%20Request" class="inline-flex rounded-lg border border-accent text-accent px-5 py-2.5 hover:bg-accent hover:text-paper transition-all duration-150 ease-in-out active:scale-95">Schedule a free consultation →</a>
+      </div>
+    </section>
+
+    <section id="why" class="border-b border-rule dark:border-ruleDark">
+      <div class="mx-auto max-w-5xl px-4 py-10">
+        <div class="text-xs font-mono tracking-widest text-gray-500 dark:text-paper/50 uppercase">Why PivotArc</div>
+        <h2 class="text-2xl mt-2 text-gray-900 dark:text-paper">No BS Approach</h2>
+        <ul class="mt-4 space-y-3 text-gray-600 dark:text-paper/80">
+          <li>• <span class="font-semibold text-gray-900 dark:text-paper">Fixed scope:</span> Clear deliverables, no scope creep</li>
+          <li>• <span class="font-semibold text-gray-900 dark:text-paper">Knowledge transfer:</span> I teach your team, not create dependency</li>
+          <li>• <span class="font-semibold text-gray-900 dark:text-paper">Honest assessment:</span> If I can't help, I'll tell you upfront</li>
+          <li>• <span class="font-semibold text-gray-900 dark:text-paper">Focus on outcomes:</span> Every engagement has measurable results</li>
         </ul>
+        
+        <h3 class="text-2xl mt-8 text-gray-900 dark:text-paper">Tailored Solutions, Not Templates</h3>
+        <p class="mt-3 text-gray-600 dark:text-paper/80">
+          While I bring systematic approaches and proven patterns from Microsoft and Google, I never apply cookie-cutter solutions. 
+          Every engagement starts with understanding your unique business goals, constraints, and team dynamics. 
+          The solution we design together will balance the right tradeoffs for YOUR situation — not what worked somewhere else.
+        </p>
       </div>
     </section>
 
-    <!-- Services -->
-    <section id="services" class="py-16 border-y border-slate-200/60 dark:border-slate-800/60">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Services for your pivotal moment</h2>
-        <p class="mt-2 text-slate-600 dark:text-slate-300">Clear scopes. Outcome-driven. Designed to raise reliability, scalability, and extensibility together.</p>
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
-            <h3 class="font-semibold">Reliability Consulting</h3>
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Blameless postmortems, incident response, runbooks</li>
-              <li>• SLOs, error budgets, on-call health</li>
-              <li>• 90‑day remediation plan with quick wins</li>
-            </ul>
-            <p class="mt-3 text-sm text-slate-500">Outcome: fewer repeat incidents, faster recovery, stronger customer trust.</p>
+    <section id="journey" class="border-b border-rule dark:border-ruleDark">
+      <div class="mx-auto max-w-5xl px-4 py-10">
+        <div class="text-xs font-mono tracking-widest text-gray-500 dark:text-paper/50 uppercase">Journey</div>
+        <h2 class="text-2xl mt-2 text-gray-900 dark:text-paper">From Startup to Hyperscale</h2>
+      </div>
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Phase 1</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">Early SaaS Builder (6 years)</div>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
-            <h3 class="font-semibold">Scalability Readiness</h3>
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Bottleneck analysis, capacity planning</li>
-              <li>• Tenancy patterns, sharding, async workflows</li>
-              <li>• Multi‑region resilience and zero‑downtime strategies</li>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Designed and built multi-tenant CRM/financial platform serving 20k+ monthly customers across 8 merchants</li>
+              <li>Architected distributed email marketing platform processing millions of messages — still running reliably today</li>
+              <li>Learned the hard way: how tenant isolation failures, customization debt, and architectural shortcuts compound into crises</li>
             </ul>
-            <p class="mt-3 text-sm text-slate-500">Outcome: handle 10× load without costly rewrites.</p>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
-            <h3 class="font-semibold">Extensibility by Design</h3>
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• API‑first design, versioning, compatibility</li>
-              <li>• Plugin points and domain boundaries</li>
-              <li>• Patterns to ship features faster with less risk</li>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Phase 2</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">Microsoft Azure (9 years)</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Senior Tech Lead & Reliability Champion: transformed incident culture across multiple teams</li>
+              <li>Led zero-downtime migrations and consolidations for services with millions of active users</li>
+              <li>Designed extensibility frameworks enabling features to ship 3x faster while improving reliability</li>
             </ul>
-            <p class="mt-3 text-sm text-slate-500">Outcome: faster developer velocity, fewer regressions.</p>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
-            <h3 class="font-semibold">Technical Due Diligence</h3>
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Architecture, reliability, scalability risk assessment</li>
-              <li>• Code & process health indicators</li>
-              <li>• Actionable roadmap for post-investment improvements</li>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 py-6 border-t border-rule dark:border-ruleDark">
+          <div class="col-span-1">
+            <div class="text-[12px] uppercase tracking-widest text-gray-500 dark:text-paper/50">Phase 3</div>
+            <div class="text-[12px] text-accent font-semibold mt-1">Google Cloud (3 years)</div>
+          </div>
+          <div class="col-span-1 md:col-span-3 text-base leading-7 text-gray-600 dark:text-paper/80">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Uber Tech Lead (UTL): architected SaaS Runtime platform from zero for planetary-scale multi-tenancy</li>
+              <li>Co-founded API Council establishing quality standards across 50+ foundational services</li>
+              <li>Authored reliability processes and postmortem guidelines adopted across multiple product areas</li>
             </ul>
-            <p class="mt-3 text-sm text-slate-500">Outcome: founders & VCs make confident decisions.</p>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft md:col-span-2">
-            <h3 class="font-semibold">CTO / Lead Engineer Mentorship</h3>
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Weekly coaching on scale, SRE, and architecture</li>
-              <li>• Shadow reviews of designs and production changes</li>
-              <li>• Vendor negotiation and roadmap sounding board</li>
-            </ul>
-            <p class="mt-3 text-sm text-slate-500">Outcome: in‑house capability grows; reliance on external help declines.</p>
-          </div>
+        </div>
+        
+        <div class="mt-8 pb-10">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-paper">What This Means for You</h3>
+          <p class="mt-2 text-gray-600 dark:text-paper/80">
+            I've lived through every stage of SaaS growth: the fragile first version held together with hope, 
+            the growth phase where everything starts breaking, and the hyperscale patterns that actually work. 
+            Now I help you bridge these stages without learning everything the hard way.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Why -->
-    <section id="why" class="py-16">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Why PivotArc</h2>
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">Pivotal-moment specialist</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">I focus on the transition from v1 to v2 — the moment where reliability, scalability, and extensibility must level up together.</p>
+    <section class="border-b border-rule dark:border-ruleDark">
+      <div class="mx-auto max-w-5xl px-4 py-10">
+        <div class="text-xs font-mono tracking-widest text-gray-500 dark:text-paper/50 uppercase">How I Work</div>
+        <h2 class="text-2xl mt-2 text-gray-900 dark:text-paper">Simple, transparent process</h2>
+        <div class="mt-6 space-y-3">
+          <div class="flex gap-4">
+            <span class="text-accent font-semibold">First:</span>
+            <span class="text-gray-600 dark:text-paper/80">Free 30-minute call to understand your challenges</span>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">Hyperscale credibility</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">12+ years across Microsoft Azure & Google Cloud; designed and operated planet‑scale systems.</p>
+          <div class="flex gap-4">
+            <span class="text-accent font-semibold">Second:</span>
+            <span class="text-gray-600 dark:text-paper/80">Proposal with fixed scope and timeline</span>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">Postmortem champion</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">One of Azure’s Postmortem Champions — I teach blameless learning that sticks and improves outcomes.</p>
+          <div class="flex gap-4">
+            <span class="text-accent font-semibold">Third:</span>
+            <span class="text-gray-600 dark:text-paper/80">Hands-on engagement with your team</span>
           </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">Mentor, not dependency</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">I coach your CTO/lead to own reliability & scale, so improvements endure after I’m gone.</p>
+          <div class="flex gap-4">
+            <span class="text-accent font-semibold">Finally:</span>
+            <span class="text-gray-600 dark:text-paper/80">Handoff with documentation and knowledge transfer</span>
           </div>
         </div>
+        <p class="mt-6 text-lg font-semibold text-gray-900 dark:text-paper">No surprises. No dependencies. Just results.</p>
       </div>
     </section>
 
-    <!-- Story / Credibility -->
-    <section id="story" class="py-16 border-y border-slate-200/60 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-900/40">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">My Story</h2>
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">1) Early SaaS Builder</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Hands-on with small SaaS systems: tenant isolation, customization, evolving single‑tenant code to multi‑tenant. Built CRMs & financial platforms serving tens of thousands of users; mission‑critical software for public sector where reliability wasn’t optional.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">2) Microsoft Azure (9y)</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Mastered global SaaS scale. Senior Tech Lead & one of 10 Azure Postmortem Champions. Drove system consolidations, designed for extensibility, and led zero‑downtime migrations for millions of users.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">3) Google Cloud (3y)</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Uber Tech Lead. Platformized learnings into a SaaS Runtime platform for planetary‑scale multi‑tenant apps. Co‑founded API Council; authored postmortem guidelines to raise review quality.</p>
-          </div>
+    <section id="contact">
+      <div class="mx-auto max-w-5xl px-4 py-12">
+        <div class="text-xs font-mono tracking-widest text-gray-500 dark:text-paper/50 uppercase">Contact</div>
+        <h2 class="text-2xl mt-2 text-gray-900 dark:text-paper">Ready to make your pivotal transition?</h2>
+        <p class="mt-2 text-gray-600 dark:text-paper/70">I personally respond to every inquiry within 24 hours.</p>
+        <div class="mt-8 space-y-3 text-base">
+          <p class="text-gray-600 dark:text-paper/80">
+            Email: <a href="mailto:tm@pivotarc.io?subject=Architecture%20Consultation%20Request" class="text-accent hover:underline">tm@pivotarc.io</a>
+          </p>
+          <p class="text-gray-600 dark:text-paper/80">
+            LinkedIn: <a href="https://www.linkedin.com/in/tomaszmilos/" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">tomaszmilos</a>
+          </p>
         </div>
-      </div>
-    </section>
-
-    <!-- Resources -->
-    <section id="resources" class="py-16">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Resources</h2>
-        <p class="mt-2 text-slate-600 dark:text-slate-300">Practical tools you can use today. No fluff.</p>
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
-            <h3 class="font-semibold">SaaS V2 Architecture Checklist (PDF)</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">15‑point checklist to spot scaling bottlenecks, fragility, and cost sinks before they bite.</p>
-            <a href="#" class="mt-4 inline-flex rounded-xl bg-accent px-4 py-2 text-sm font-medium text-slate-900 hover:opacity-90">Download</a>
-          </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-soft">
-            <h3 class="font-semibold">Blameless Postmortem Guide (PDF)</h3>
-            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Step‑by‑step template and facilitation tips from enterprise‑scale incident programs.</p>
-            <a href="#" class="mt-4 inline-flex rounded-xl bg-accent px-4 py-2 text-sm font-medium text-slate-900 hover:opacity-90">Download</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="py-16 border-t border-slate-200/60 dark:border-slate-800/60">
-      <div class="mx-auto max-w-6xl px-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-          <div class="md:col-span-2">
-            <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Ready to make the pivotal transition?</h2>
-            <p class="mt-2 text-slate-600 dark:text-slate-300">Book a free consultation. I’ll review your situation and outline concrete next steps — whether it’s a reliability upgrade sprint or a full v2 blueprint.</p>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="https://calendly.com/" class="rounded-xl bg-accent px-5 py-3 font-medium text-slate-900 hover:opacity-90">Book call</a>
-              <a href="mailto:hello@pivotarc.one" class="rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-medium hover:bg-slate-50 dark:hover:bg-slate-900">Email</a>
-              <a href="https://www.linkedin.com/" class="rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-medium hover:bg-slate-50 dark:hover:bg-slate-900">LinkedIn</a>
-            </div>
-          </div>
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-            <h3 class="font-semibold">Quick details</h3>
-            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>• Based in Poland • Serving EU & UK</li>
-              <li>• Availability: part‑time advisory, short projects</li>
-              <li>• Focus: SaaS reliability, scalability, extensibility</li>
-            </ul>
-          </div>
+        <p class="mt-8 text-gray-600 dark:text-paper/70">Let's discuss how I can help you scale without breaking.</p>
+        <div class="mt-8">
+          <a href="mailto:tm@pivotarc.io?subject=Architecture%20Consultation%20Request" class="inline-flex items-center justify-center rounded-lg border border-accent text-accent px-5 py-2.5 hover:bg-accent hover:text-paper transition-all duration-150 ease-in-out active:scale-95">
+            Schedule Your Free Consultation
+          </a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-slate-200/60 dark:border-slate-800/60 py-8 text-sm">
-    <div class="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-600 dark:text-slate-400">
-      <div class="flex items-center gap-2">
-        <div class="h-7 w-7 rounded-lg bg-accent/20 grid place-items-center">
-          <span class="text-accent text-xs font-bold">PA</span>
-        </div>
-        <span>PivotArc</span>
-      </div>
-      <div class="flex items-center gap-4">
-        <a class="hover:text-slate-900 dark:hover:text-white" href="https://www.linkedin.com/">LinkedIn</a>
-        <a class="hover:text-slate-900 dark:hover:text-white" href="mailto:hello@pivotarc.one">hello@pivotarc.one</a>
-      </div>
-      <div class="text-xs">© <span id="year"></span> PivotArc. All rights reserved.</div>
+  <footer class="border-t border-rule dark:border-ruleDark">
+    <div class="mx-auto max-w-5xl px-4 py-6 text-sm text-center text-gray-600 dark:text-paper/60">
+      <span>© <span id="year"></span> PivotArc</span>
     </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const themeBtn = document.getElementById('themeToggle');
-    const themeBtnM = document.getElementById('themeToggleMobile');
 
-    menuBtn?.addEventListener('click', () => {
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenuBtn.classList.toggle('open');
       mobileMenu.classList.toggle('hidden');
     });
 
-    function toggleTheme() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('pa-theme', isDark ? 'dark' : 'light');
-    }
-    themeBtn?.addEventListener('click', toggleTheme);
-    themeBtnM?.addEventListener('click', toggleTheme);
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuBtn.classList.remove('open');
+        mobileMenu.classList.add('hidden');
+      });
+    });
   </script>
 </body>
 </html>
